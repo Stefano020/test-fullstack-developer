@@ -9,17 +9,17 @@ class UserController {
       const emailExist = await UserModel.getUserByEmail(userEmail);
 
       if (emailExist) {
-        res.status(403).json({ error: 'Email already exists' });
+        res.status(403).send({ error: 'Email already exists' });
         return;
       }
 
       const newUser = await UserModel.createUser(userName, password, userEmail);
 
-      res.status(201).json({ message: 'User registered successfully', newUser });
+      res.status(201).send({ message: 'User registered successfully', newUser });
 
     } catch (error) {
       console.error('Error registering user:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 
@@ -29,17 +29,17 @@ class UserController {
       const user = await UserModel.getUserByEmail(userEmail);
 
       if (!user || user.password !== password) {
-        res.status(401).json({ error: 'Wrong e-mail or password, please try again' });
+        res.status(401).send({ error: 'Wrong e-mail or password, please try again' });
         return;
       }
 
       const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-      res.status(200).json({ message: 'Login successful', token });
+      res.status(200).send({ message: 'Login successful', token });
     } catch (error) {
       //TODO: handle error
       console.error('Error logging in:', error.message);
-      res.status(500).json({ error: error.message });
+      res.status(500).send({ error: error.message });
     }
   }
 }

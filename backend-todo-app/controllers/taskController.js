@@ -6,10 +6,10 @@ class TaskController {
 
     try {
       const task = await TaskModel.createTask(userId, title);
-      res.status(201).json({ message: 'Task created successfully', task });
+      res.status(201).send({ message: 'Task created successfully', task });
     } catch (error) {
       console.error('Error creating task:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 
@@ -18,10 +18,10 @@ class TaskController {
 
     try {
       const tasks = await TaskModel.getTasksByUserId(userId);
-      res.status(200).json(tasks);
+      res.status(200).send(tasks);
     } catch (error) {
       console.error('Error fetching tasks:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 
@@ -31,13 +31,13 @@ class TaskController {
     try {
       const deletedTask = await TaskModel.deleteTask(taskId, userId);
       if (deletedTask) {
-        res.status(200).json({ message: 'Task deleted successfully', deletedTask });
+        res.status(200).send({ message: 'Task deleted successfully', deletedTask });
       } else {
-        res.status(404).json({ error: 'Task not found' });
+        res.status(404).send({ error: 'Task not found' });
       }
     } catch (error) {
       console.error('Error deleting task:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 
@@ -48,13 +48,13 @@ class TaskController {
       const updatedTask = await TaskModel.editTask(taskId, newTitle, userId);
       
       if (updatedTask) {
-        res.status(200).json({ message: 'Task edited successfully', updatedTask });
+        res.status(200).send({ message: 'Task edited successfully', updatedTask });
       } else {
-        res.status(404).json({ error: 'Task not found' });
+        res.status(404).send({ error: 'Task not found' });
       }
     } catch (error) {
       console.error('Error editing task:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 }

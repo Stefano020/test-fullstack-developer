@@ -1,19 +1,28 @@
-const express = require('express');
+const fastify = require('fastify')({ logger: true });
 require('dotenv').config();
-const cors = require('cors');
-const app = express();
 
-app.use(cors());
-app.use(express.json());
+fastify.options('/api/users/login', async (request, reply) => {
+  reply
+    .code(204)
+    .header('Access-Control-Allow-Origin', '*')
+    .header('Access-Control-Allow-Methods', 'POST')
+    .send();
+});
 
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/tasks', require('./routes/taskRoutes'));
+fastify.register(require('./routes/userRoutes'), { prefix: '/api/users' });
+fastify.register(require('./routes/taskRoutes'), { prefix: '/api/tasks' });
 
-app.get('/api/status', (_req, res) => {
-  res.json({ status: 'Server is running' });
+fastify.get('/api/status', async (_req, _res) => {
+  return { status: 'Server is running' };
 });
 
 const PORT = process.env.PORT || 2001;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
+fastify.listen({ port: PORT })
+  .then(() => {
+    console.log(`Server is running on port ${PORT}`);
+  })
+  .catch((err) => {
+    fastify.log.error(err);
+    process.exit(1);
+  });

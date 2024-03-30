@@ -4,7 +4,7 @@ const authController = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).send({ error: 'Unauthorized' });
   }
 
   try {
@@ -12,7 +12,7 @@ const authController = (req, res, next) => {
     req.userId = decodedToken.userId;
     next();
   } catch (error) {
-    return res.status(401).json({ error: 'Invalid token' });
+    return res.status(401).send({ error: 'Invalid token' });
   }
 };
 
