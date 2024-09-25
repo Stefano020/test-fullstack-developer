@@ -1,7 +1,5 @@
-[![Tania Bulhoes Logo](https://images.squarespace-cdn.com/content/v1/625f0af3cbf96235f8de8b4a/539097a0-548d-4a84-a5fa-6cbbad1964a0/Tania_bulhoes_Logo_Horizontal_Positivo_RGB.png?format=1500w)](https://tbi.taniabulhoes.com.br/)
-
 <h1 align="center">
-    TETE FULL STACK DEVELOPER
+    TO DO LIST
 </h1>
 
 <h4 align="center"> 
